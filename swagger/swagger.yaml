@@ -380,9 +380,27 @@ components:
         quotes:
           type: array
           items:
-            $ref: '#/components/schemas/QuoteDto'
+            $ref: '#/components/schemas/QuoteListItemDto'
         moreRecordsExist:
           type: boolean
+    QuoteListItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        quoteNumber:
+          type: integer
+          format: int32
+        statusCode:
+          $ref: '#/components/schemas/QuoteStatusCode'
+        lastModifiedAt:
+          type: string
+          format: date-time
+        customerName:
+          type: string
+        mobilePhoneDescription:
+          type: string
     UpsertQuoteAccessoriesCommand:
       type: object
       additionalProperties: false
