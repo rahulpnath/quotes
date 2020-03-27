@@ -3,9 +3,9 @@ info:
   title: Quote API
   version: 1.0.0
 servers:
-  - url: 'http://localhost:5000'
+  - url: "http://localhost:5000"
 paths:
-  '/api/customers/{id}':
+  "/api/customers/{id}":
     get:
       tags:
         - Customers
@@ -17,13 +17,13 @@ paths:
             type: integer
             format: int32
       responses:
-        '200':
-          description: 'customer details'
+        "200":
+          description: "customer details"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomerDto'
-  '/api/quotes/{id}':
+                $ref: "#/components/schemas/CustomerDto"
+  "/api/quotes/{id}":
     get:
       tags:
         - Quotes
@@ -36,12 +36,12 @@ paths:
             nullable: true
           x-position: 1
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuoteDto'
+                $ref: "#/components/schemas/QuoteDto"
   /api/quotes:
     post:
       tags:
@@ -50,15 +50,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddQuoteCommand'
+              $ref: "#/components/schemas/AddQuoteCommand"
         required: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AddQuoteResponse'
+                $ref: "#/components/schemas/AddQuoteResponse"
     get:
       tags:
         - Quotes
@@ -74,13 +74,13 @@ paths:
             type: boolean
             nullable: true
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuotesDto'
-  '/api/quotes/{id}/customer':
+                $ref: "#/components/schemas/QuotesDto"
+  "/api/quotes/{id}/customer":
     put:
       tags:
         - Quotes
@@ -95,12 +95,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateQuoteCustomerCommand'
+              $ref: "#/components/schemas/UpdateQuoteCustomerCommand"
         required: true
       responses:
-        '200':
-          description: 'success'
-  '/api/quotes/{id}/mobile-phone':
+        "200":
+          description: "success"
+  "/api/quotes/{id}/mobile-phone":
     put:
       tags:
         - Quotes
@@ -115,12 +115,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateQuoteMobilePhoneCommand'
+              $ref: "#/components/schemas/UpdateQuoteMobilePhoneCommand"
         required: true
       responses:
-        '200':
-          description: 'success'
-  '/api/quotes/{id}/accessories':
+        "200":
+          description: "success"
+  "/api/quotes/{id}/accessories":
     post:
       tags:
         - Quotes
@@ -135,12 +135,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpsertQuoteAccessoriesCommand'
+              $ref: "#/components/schemas/UpsertQuoteAccessoriesCommand"
         required: true
       responses:
-        '200':
-          description: 'success'
-  '/api/quotes/{id}/note':
+        "200":
+          description: "success"
+  "/api/quotes/{id}/note":
     put:
       tags:
         - Quotes
@@ -157,13 +157,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateQuoteNoteCommand'
+              $ref: "#/components/schemas/UpdateQuoteNoteCommand"
         required: true
         x-position: 2
       responses:
-        '200':
-          description: 'success'
-  '/api/quotes/{id}/accept':
+        "200":
+          description: "success"
+  "/api/quotes/{id}/accept":
     post:
       tags:
         - Quotes
@@ -180,12 +180,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AcceptQuoteCommand'
+              $ref: "#/components/schemas/AcceptQuoteCommand"
         required: true
         x-position: 2
       responses:
-        '200':
-          description: 'success'
+        "200":
+          description: "success"
   /sign-in:
     get:
       tags:
@@ -198,26 +198,26 @@ paths:
             nullable: true
           x-position: 1
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
   /sign-out:
     get:
       tags:
         - Security
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
   /api/users/me:
     get:
       tags:
         - Users
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfileDto'
+                $ref: "#/components/schemas/UserProfileDto"
 components:
   schemas:
     CustomerDto:
@@ -235,6 +235,10 @@ components:
         email:
           type: string
           nullable: true
+      required:
+        - name
+        - address
+        - email
     QuoteDto:
       type: object
       additionalProperties: false
@@ -245,47 +249,53 @@ components:
           type: integer
           format: int32
         statusCode:
-          $ref: '#/components/schemas/QuoteStatusCode'
+          $ref: "#/components/schemas/QuoteStatusCode"
         lastModifiedAt:
           type: string
           format: date-time
         customer:
-          $ref: '#/components/schemas/CustomerDto'
+          $ref: "#/components/schemas/CustomerDto"
         mobilePhone:
-          $ref: '#/components/schemas/QuoteMobilePhoneDto'
+          $ref: "#/components/schemas/QuoteMobilePhoneDto"
         accessories:
           type: array
           items:
-            $ref: '#/components/schemas/QuoteAccessoryDto'
+            $ref: "#/components/schemas/QuoteAccessoryDto"
         note:
           type: string
           nullable: true
+      required:
+        - id
+        - statusCode
+        - lastModifiedAt
+        - customer
     QuoteStatusCode:
       type: string
-      description: ''
+      description: ""
       enum:
         - Draft
         - Open
         - Accepted
-        - Expired    
+        - Expired
     QuoteMobilePhoneDto:
       type: object
       additionalProperties: false
       properties:
-        make:
+        serialNo:
           type: string
-          nullable: true
         model:
           type: string
-          nullable: true
         price:
           type: number
           format: decimal
-          nullable: true
         discount:
           type: number
           format: decimal
           nullable: true
+      required:
+        - serialNo
+        - model
+        - price
     QuoteAccessoryDto:
       type: object
       additionalProperties: false
@@ -301,12 +311,19 @@ components:
         unitPrice:
           type: number
           format: decimal
+      required:
+        - id
+        - description
+        - quantity
+        - unitPrice
     AddQuoteResponse:
       type: object
       additionalProperties: false
       properties:
         id:
           type: string
+      required:
+        - id
     AddQuoteCommand:
       type: object
       additionalProperties: false
@@ -315,13 +332,11 @@ components:
           type: string
         customerAddress:
           type: string
-          nullable: true
         customerPhone:
           type: string
           nullable: true
         customerEmail:
           type: string
-          nullable: true
         mobilePhoneMake:
           type: string
           nullable: true
@@ -336,6 +351,10 @@ components:
           type: number
           format: decimal
           nullable: true
+      required:
+        - customerName
+        - customerAddress
+        - customerEmail
     UpdateQuoteCustomerCommand:
       type: object
       additionalProperties: false
@@ -346,33 +365,38 @@ components:
           type: string
         customerAddress:
           type: string
-          nullable: true
         customerPhone:
           type: string
           nullable: true
         customerEmail:
           type: string
-          nullable: true
+      required:
+        - quoteId
+        - customerName
+        - customerEmail
+        - customerAddress
     UpdateQuoteMobilePhoneCommand:
       type: object
       additionalProperties: false
       properties:
         quoteId:
           type: string
-        make:
+        serialNo:
           type: string
-          nullable: true
         model:
           type: string
-          nullable: true
         price:
           type: number
           format: decimal
-          nullable: true
         discount:
           type: number
           format: decimal
           nullable: true
+      required:
+        - quoteId
+        - serialNo
+        - model
+        - price
     QuotesDto:
       type: object
       additionalProperties: false
@@ -380,7 +404,7 @@ components:
         quotes:
           type: array
           items:
-            $ref: '#/components/schemas/QuoteListItemDto'
+            $ref: "#/components/schemas/QuoteListItemDto"
         moreRecordsExist:
           type: boolean
     QuoteListItemDto:
@@ -393,7 +417,7 @@ components:
           type: integer
           format: int32
         statusCode:
-          $ref: '#/components/schemas/QuoteStatusCode'
+          $ref: "#/components/schemas/QuoteStatusCode"
         lastModifiedAt:
           type: string
           format: date-time
@@ -401,6 +425,12 @@ components:
           type: string
         mobilePhoneDescription:
           type: string
+      required:
+        - id
+        - statusCode
+        - lastModifiedAt
+        - customerName
+        - customerAddress
     UpsertQuoteAccessoriesCommand:
       type: object
       additionalProperties: false
@@ -410,7 +440,9 @@ components:
         accessories:
           type: array
           items:
-            $ref: '#/components/schemas/QuoteAccessoryDto'
+            $ref: "#/components/schemas/QuoteAccessoryDto"
+      required:
+        - quoteId
     UpdateQuoteNoteCommand:
       type: object
       additionalProperties: false
@@ -420,12 +452,16 @@ components:
         note:
           type: string
           nullable: true
+      required:
+        - quoteId
     AcceptQuoteCommand:
       type: object
       additionalProperties: false
       properties:
         quoteId:
           type: string
+      required:
+        - quoteId
     UserProfileDto:
       type: object
       additionalProperties: false
@@ -437,5 +473,7 @@ components:
         userPictureUrl:
           type: string
           nullable: true
-        localeCode:
-          type: string
+      required:
+        - id
+        - name
+        - userPictureUrl

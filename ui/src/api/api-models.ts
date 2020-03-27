@@ -8,18 +8,18 @@
 // ReSharper disable InconsistentNaming
 
 export interface CustomerDto {
-  name?: string;
-  address?: string | undefined;
+  name: string;
+  address: string | undefined;
   phone?: string | undefined;
-  email?: string | undefined;
+  email: string | undefined;
 }
 
 export interface QuoteDto {
-  id?: string;
+  id: string;
   quoteNumber?: number;
-  statusCode?: QuoteStatusCode;
-  lastModifiedAt?: Date;
-  customer?: CustomerDto;
+  statusCode: QuoteStatusCode;
+  lastModifiedAt: Date;
+  customer: CustomerDto;
   mobilePhone?: QuoteMobilePhoneDto;
   accessories?: QuoteAccessoryDto[];
   note?: string | undefined;
@@ -33,28 +33,28 @@ export enum QuoteStatusCode {
 }
 
 export interface QuoteMobilePhoneDto {
-  make?: string | undefined;
-  model?: string | undefined;
-  price?: number | undefined;
+  serialNo: string;
+  model: string;
+  price: number;
   discount?: number | undefined;
 }
 
 export interface QuoteAccessoryDto {
-  id?: number;
-  description?: string;
-  quantity?: number;
-  unitPrice?: number;
+  id: number;
+  description: string;
+  quantity: number;
+  unitPrice: number;
 }
 
 export interface AddQuoteResponse {
-  id?: string;
+  id: string;
 }
 
 export interface AddQuoteCommand {
-  customerName?: string;
-  customerAddress?: string | undefined;
+  customerName: string;
+  customerAddress: string;
   customerPhone?: string | undefined;
-  customerEmail?: string | undefined;
+  customerEmail: string;
   mobilePhoneMake?: string | undefined;
   mobilePhoneModel?: string | undefined;
   price?: number | undefined;
@@ -62,18 +62,18 @@ export interface AddQuoteCommand {
 }
 
 export interface UpdateQuoteCustomerCommand {
-  quoteId?: string;
-  customerName?: string;
-  customerAddress?: string | undefined;
+  quoteId: string;
+  customerName: string;
+  customerAddress: string;
   customerPhone?: string | undefined;
-  customerEmail?: string | undefined;
+  customerEmail: string;
 }
 
 export interface UpdateQuoteMobilePhoneCommand {
-  quoteId?: string;
-  make?: string | undefined;
-  model?: string | undefined;
-  price?: number | undefined;
+  quoteId: string;
+  serialNo: string;
+  model: string;
+  price: number;
   discount?: number | undefined;
 }
 
@@ -83,31 +83,30 @@ export interface QuotesDto {
 }
 
 export interface QuoteListItemDto {
-  id?: string;
+  id: string;
   quoteNumber?: number;
-  statusCode?: QuoteStatusCode;
-  lastModifiedAt?: Date;
-  customerName?: string;
+  statusCode: QuoteStatusCode;
+  lastModifiedAt: Date;
+  customerName: string;
   mobilePhoneDescription?: string;
 }
 
 export interface UpsertQuoteAccessoriesCommand {
-  quoteId?: string;
+  quoteId: string;
   accessories?: QuoteAccessoryDto[];
 }
 
 export interface UpdateQuoteNoteCommand {
-  quoteId?: string;
+  quoteId: string;
   note?: string | undefined;
 }
 
 export interface AcceptQuoteCommand {
-  quoteId?: string;
+  quoteId: string;
 }
 
 export interface UserProfileDto {
-  id?: string;
-  name?: string;
-  userPictureUrl?: string | undefined;
-  localeCode?: string;
+  id: string;
+  name: string;
+  userPictureUrl: string | undefined;
 }
