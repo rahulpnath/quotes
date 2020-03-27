@@ -1,0 +1,441 @@
+openapi: 3.0.0
+info:
+  title: Quote API
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:5000'
+paths:
+  '/api/customers/{id}':
+    get:
+      tags:
+        - Customers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'customer details'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+  '/api/quotes/{id}':
+    get:
+      tags:
+        - Quotes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+          x-position: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteDto'
+  /api/quotes:
+    post:
+      tags:
+        - Quotes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddQuoteCommand'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddQuoteResponse'
+    get:
+      tags:
+        - Quotes
+      parameters:
+        - name: filter
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: activeOnly
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotesDto'
+  '/api/quotes/{id}/customer':
+    put:
+      tags:
+        - Quotes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateQuoteCustomerCommand'
+        required: true
+      responses:
+        '200':
+          description: 'success'
+  '/api/quotes/{id}/mobile-phone':
+    put:
+      tags:
+        - Quotes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateQuoteMobilePhoneCommand'
+        required: true
+      responses:
+        '200':
+          description: 'success'
+  '/api/quotes/{id}/accessories':
+    post:
+      tags:
+        - Quotes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertQuoteAccessoriesCommand'
+        required: true
+      responses:
+        '200':
+          description: 'success'
+  '/api/quotes/{id}/note':
+    put:
+      tags:
+        - Quotes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+          x-position: 1
+      requestBody:
+        x-name: dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateQuoteNoteCommand'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: 'success'
+  '/api/quotes/{id}/accept':
+    post:
+      tags:
+        - Quotes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+          x-position: 1
+      requestBody:
+        x-name: dto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptQuoteCommand'
+        required: true
+        x-position: 2
+      responses:
+        '200':
+          description: 'success'
+  /sign-in:
+    get:
+      tags:
+        - Security
+      parameters:
+        - name: returnUrl
+          in: query
+          schema:
+            type: string
+            nullable: true
+          x-position: 1
+      responses:
+        '200':
+          description: ''
+  /sign-out:
+    get:
+      tags:
+        - Security
+      responses:
+        '200':
+          description: ''
+  /api/users/me:
+    get:
+      tags:
+        - Users
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileDto'
+components:
+  schemas:
+    CustomerDto:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+    QuoteDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        quoteNumber:
+          type: integer
+          format: int32
+        statusCode:
+          $ref: '#/components/schemas/QuoteStatusCode'
+        lastModifiedAt:
+          type: string
+          format: date-time
+        customer:
+          $ref: '#/components/schemas/CustomerDto'
+        mobilePhone:
+          $ref: '#/components/schemas/QuoteMobilePhoneDto'
+        accessories:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteAccessoryDto'
+        note:
+          type: string
+          nullable: true
+    QuoteStatusCode:
+      type: string
+      description: ''
+      enum:
+        - Draft
+        - Open
+        - Accepted
+        - Expired    
+    QuoteMobilePhoneDto:
+      type: object
+      additionalProperties: false
+      properties:
+        make:
+          type: string
+          nullable: true
+        model:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+        discount:
+          type: number
+          format: decimal
+          nullable: true
+    QuoteAccessoryDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        description:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        unitPrice:
+          type: number
+          format: decimal
+    AddQuoteResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+    AddQuoteCommand:
+      type: object
+      additionalProperties: false
+      properties:
+        customerName:
+          type: string
+        customerAddress:
+          type: string
+          nullable: true
+        customerPhone:
+          type: string
+          nullable: true
+        customerEmail:
+          type: string
+          nullable: true
+        mobilePhoneMake:
+          type: string
+          nullable: true
+        mobilePhoneModel:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+        discount:
+          type: number
+          format: decimal
+          nullable: true
+    UpdateQuoteCustomerCommand:
+      type: object
+      additionalProperties: false
+      properties:
+        quoteId:
+          type: string
+        customerName:
+          type: string
+        customerAddress:
+          type: string
+          nullable: true
+        customerPhone:
+          type: string
+          nullable: true
+        customerEmail:
+          type: string
+          nullable: true
+    UpdateQuoteMobilePhoneCommand:
+      type: object
+      additionalProperties: false
+      properties:
+        quoteId:
+          type: string
+        make:
+          type: string
+          nullable: true
+        model:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: decimal
+          nullable: true
+        discount:
+          type: number
+          format: decimal
+          nullable: true
+    QuotesDto:
+      type: object
+      additionalProperties: false
+      properties:
+        quotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteListItemDto'
+        moreRecordsExist:
+          type: boolean
+    QuoteListItemDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        quoteNumber:
+          type: integer
+          format: int32
+        statusCode:
+          $ref: '#/components/schemas/QuoteStatusCode'
+        lastModifiedAt:
+          type: string
+          format: date-time
+        customerName:
+          type: string
+        mobilePhoneDescription:
+          type: string
+    UpsertQuoteAccessoriesCommand:
+      type: object
+      additionalProperties: false
+      properties:
+        quoteId:
+          type: string
+        accessories:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteAccessoryDto'
+    UpdateQuoteNoteCommand:
+      type: object
+      additionalProperties: false
+      properties:
+        quoteId:
+          type: string
+        note:
+          type: string
+          nullable: true
+    AcceptQuoteCommand:
+      type: object
+      additionalProperties: false
+      properties:
+        quoteId:
+          type: string
+    UserProfileDto:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        userPictureUrl:
+          type: string
+          nullable: true
+        localeCode:
+          type: string
