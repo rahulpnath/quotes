@@ -1,12 +1,21 @@
 {
-  "users": [
+  "quotes": [
     {
-      "id": 1,
-      "name": "Test 1"
-    },
-    {
-      "id": 2,
-      "name": "Test 2"
+      "quotes": [
+        {
+          "id": "1",
+          "customerName": "Rahul",
+          "lastModifiedAt": "27-Mar-2020",
+          "statusCode": "Draft"
+        },
+        {
+          "id": "2",
+          "customerName": "Vincent",
+          "lastModifiedAt": "26-Mar-2020",
+          "statusCode": "Draft"
+        }
+      ],
+      "moreRecordsExist": false
     }
   ]
 }
