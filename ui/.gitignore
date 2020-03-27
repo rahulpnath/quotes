@@ -11,6 +11,10 @@
 # production
 /build
 
+#cypress
+cypress/integration/examples
+cypress.env.json
+
 # misc
 .DS_Store
 .env.local
