@@ -79,7 +79,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/QuotesDto"
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuoteSummaryDto"
+
   "/api/quotes/{id}/customer":
     put:
       tags:
@@ -397,17 +400,8 @@ components:
         - serialNo
         - model
         - price
-    QuotesDto:
-      type: object
-      additionalProperties: false
-      properties:
-        quotes:
-          type: array
-          items:
-            $ref: "#/components/schemas/QuoteListItemDto"
-        moreRecordsExist:
-          type: boolean
-    QuoteListItemDto:
+
+    QuoteSummaryDto:
       type: object
       additionalProperties: false
       properties:
