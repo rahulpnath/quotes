@@ -1,6 +1,7 @@
 const jsonServer = require('json-server');
+const data = require('./mockData');
 const server = jsonServer.create();
-const router = jsonServer.router('mockdata/db.json');
+const router = jsonServer.router(data);
 
 const middlewares = jsonServer.defaults();
 
@@ -8,7 +9,8 @@ server.use(middlewares);
 
 server.use(
   jsonServer.rewriter({
-    '/api/*': '/$1', 
+    '/api/*': '/$1',
+    '/quotes': '/quotesSummary/',
   })
 );
 
