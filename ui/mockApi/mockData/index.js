@@ -2,6 +2,7 @@ const quotes = require('./quotes');
 
 const toSummary = quote => ({
   id: quote.id,
+  scenarios: quote.scenarios,
   quoteNumber: quote.quoteNumber,
   statusCode: quote.statusCode,
   lastModifiedAt: quote.lastModifiedAt,

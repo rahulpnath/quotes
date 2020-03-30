@@ -14,6 +14,18 @@ server.use(
   })
 );
 
+router.render = (req, res) => {
+  const scenariosHeader = req.headers['scenarios'];
+  const scenarios = scenariosHeader ? scenariosHeader.split(' ') : [];
+  const data = res.locals.data;
+  if (scenariosHeader && Array.isArray(data) && data.length > 0) {
+    const filteredByScenario = data.filter(d =>
+      scenarios.every(scenario => d.scenarios.includes(scenario))
+    );
+    res.jsonp(filteredByScenario);
+  } else res.jsonp(data);
+};
+
 server.use(router);
 
 server.listen(5000, () => {
