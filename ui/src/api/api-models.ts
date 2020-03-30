@@ -77,12 +77,7 @@ export interface UpdateQuoteMobilePhoneCommand {
   discount?: number | undefined;
 }
 
-export interface QuotesDto {
-  quotes?: QuoteListItemDto[];
-  moreRecordsExist?: boolean;
-}
-
-export interface QuoteListItemDto {
+export interface QuoteSummaryDto {
   id: string;
   quoteNumber?: number;
   statusCode: QuoteStatusCode;
