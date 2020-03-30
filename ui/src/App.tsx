@@ -1,6 +1,6 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { QuoteSummaryDto } from 'api/api-models';
-import * as QuotesApi from 'api/quotes';
+import * as QuotesApi from 'api/quotes.api';
 import { History } from 'history';
 import React, { useState } from 'react';
 import { Router } from 'react-router-dom';

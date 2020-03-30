@@ -24,7 +24,7 @@ module.exports = [
     accessories: [],
   },
   {
-    scenarios: ['open'],
+    scenarios: ['open', 'phone'],
     id: '1',
     statusCode: 'Open',
     lastModifiedAt: '20-Mar-2020',
