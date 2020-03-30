@@ -11,6 +11,7 @@ const toSummary = quote => ({
 });
 
 const quotesSummary = quotes.map(toSummary);
+
 module.exports = {
   quotes,
   quotesSummary,

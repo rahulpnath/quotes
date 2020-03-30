@@ -1,12 +1,11 @@
-{
-  [
-    {
-      url: ['/api/quotes/*',]
-      responseCode: 'user-error',
-      response: {
-        message: 'Error',
-        status: '500',
-      },
+module.exports = [
+  {
+    urls: ['/api/quotes'],
+    code: 'error',
+    httpStatus: 500,
+    respone: {
+      code: 'error',
+      message: 'Unable to get data. ',
     },
-  ];
-}
+  },
+];

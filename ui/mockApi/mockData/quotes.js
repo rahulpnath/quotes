@@ -1,7 +1,7 @@
 module.exports = [
   {
-    id: '1',
     scenarios: ['draft'],
+    id: '1',
     statusCode: 'Draft',
     lastModifiedAt: '2-Mar-2020',
     customer: {
@@ -11,8 +11,8 @@ module.exports = [
     accessories: [],
   },
   {
-    id: '1',
     scenarios: ['draft', 'phone'],
+    id: '1',
     statusCode: 'Draft',
     lastModifiedAt: '2-Mar-2020',
     customer: {
@@ -24,8 +24,8 @@ module.exports = [
     accessories: [],
   },
   {
-    id: '1',
     scenarios: ['open'],
+    id: '1',
     statusCode: 'Open',
     lastModifiedAt: '20-Mar-2020',
     customer: {
