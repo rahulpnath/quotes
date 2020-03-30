@@ -1,5 +1,6 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { QuoteStatusCode, QuoteSummaryDto } from 'api/api-models';
+import { useStore } from 'hooks';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { LoadingPane } from 'views/components/application/LoadingPane';
@@ -8,28 +9,42 @@ import styles from './QuotesList.module.scss';
 import { QuoteStatus } from './QuoteStatus';
 
 export const QuotesList: React.FC = () => {
-  const quotes: QuoteSummaryDto[] = [
-    {
-      id: '1',
-      quoteNumber: 1,
-      statusCode: QuoteStatusCode.Draft,
-      lastModifiedAt: new Date(),
-      customerName: 'vincent',
-      mobilePhoneDescription: 'iphone 20',
-    },
-    {
-      id: '2',
-      quoteNumber: 2,
-      statusCode: QuoteStatusCode.Accepted,
-      lastModifiedAt: new Date(),
-      customerName: 'rahul',
-      mobilePhoneDescription: 'iphone 21',
-    },
-  ];
   const history = useHistory();
+  const store = useStore();
+
+  const createQuote = () => {
+    const quotes: QuoteSummaryDto[] = [
+      {
+        id: '1',
+        quoteNumber: 1,
+        statusCode: QuoteStatusCode.Draft,
+        lastModifiedAt: new Date(),
+        customerName: 'vincent',
+        mobilePhoneDescription: 'iphone 20',
+      },
+      {
+        id: '2',
+        quoteNumber: 2,
+        statusCode: QuoteStatusCode.Accepted,
+        lastModifiedAt: new Date(),
+        customerName: 'rahul',
+        mobilePhoneDescription: 'iphone 21',
+      },
+    ];
+    store.quotes = quotes;
+  };
 
   return (
     <PageLayout title="All Quotes" parent="none">
+      <div className={styles.actions}>
+        <Button
+          className={styles.newquote}
+          color="primary"
+          variant="contained"
+          onClick={createQuote}>
+          Create Quote
+        </Button>
+      </div>
       <LoadingPane isLoading={false}>
         <Table className={styles.table}>
           <TableHead className={styles.tablehead}>
@@ -42,7 +57,7 @@ export const QuotesList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {quotes.map(q => {
+            {store.quotes.map(q => {
               const openQuote = () => history.push(`/quotes/${q.id}`);
               return (
                 <TableRow key={q.id} className={styles.row}>
@@ -58,7 +73,9 @@ export const QuotesList: React.FC = () => {
             })}
           </TableBody>
         </Table>
-        {quotes.length === 0 && <p className={styles.noquotes}>There are no matching Quotes.</p>}
+        {store.quotes.length === 0 && (
+          <p className={styles.noquotes}>There are no matching Quotes.</p>
+        )}
       </LoadingPane>
     </PageLayout>
   );
