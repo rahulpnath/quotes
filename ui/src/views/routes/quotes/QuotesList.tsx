@@ -1,7 +1,6 @@
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { QuoteStatusCode, QuoteSummaryDto } from 'api/api-models';
 import { useStore } from 'hooks';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LoadingPane } from 'views/components/application/LoadingPane';
 import { PageLayout } from 'views/components/application/PageLayout';
@@ -12,27 +11,11 @@ export const QuotesList: React.FC = () => {
   const history = useHistory();
   const store = useStore();
 
-  const createQuote = () => {
-    const quotes: QuoteSummaryDto[] = [
-      {
-        id: '1',
-        quoteNumber: 1,
-        statusCode: QuoteStatusCode.Draft,
-        lastModifiedAt: new Date(),
-        customerName: 'vincent',
-        mobilePhoneDescription: 'iphone 20',
-      },
-      {
-        id: '2',
-        quoteNumber: 2,
-        statusCode: QuoteStatusCode.Accepted,
-        lastModifiedAt: new Date(),
-        customerName: 'rahul',
-        mobilePhoneDescription: 'iphone 21',
-      },
-    ];
-    store.quotes = quotes;
-  };
+  useEffect(() => {
+    store.loadQuotes();
+  }, [store]);
+
+  const createQuote = () => {};
 
   return (
     <PageLayout title="All Quotes" parent="none">
