@@ -1,0 +1,22 @@
+.shell {
+  height: 100%;
+}
+
+.main {
+  padding: 1rem;
+}
+
+.logo {
+  display: flex;
+
+  > img {
+    height: 1.8rem;
+  }
+}
+
+.title {
+  flex-grow: 1;
+  margin-left: 0.5rem;
+  border-left: 1px solid;
+  padding-left: 0.5rem;
+}

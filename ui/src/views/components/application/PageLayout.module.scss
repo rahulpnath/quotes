@@ -1,0 +1,39 @@
+.root {
+  display: grid;
+  grid-template-columns: auto auto 1fr; // Make the title auto, so that it breaks after the audit when on small screens
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    'breadcrumb breadcrumb breadcrumb'
+    'title subtitle audit'
+    'content content content';
+}
+
+.breadcrumb {
+  grid-area: breadcrumb;
+  margin-bottom: 0.5em;
+
+  a {
+    display: flex; // Show icons and text in line
+  }
+}
+
+.title {
+  grid-area: title;
+  margin-right: 1rem;
+}
+
+.subtitle {
+  grid-area: subtitle;
+  align-self: center;
+}
+
+.audit {
+  grid-area: audit;
+  align-self: end;
+  text-align: right;
+}
+
+.content {
+  grid-area: content;
+  padding: 1em 0;
+}

@@ -1,3 +1,4 @@
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { History } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
@@ -10,8 +11,11 @@ interface IAppProps {
 
 export const App: React.FC<IAppProps> = ({ history }) => {
   return (
-    <Router history={history}>
-      <Routes />
-    </Router>
+    <>
+      <CssBaseline />
+      <Router history={history}>
+        <Routes />
+      </Router>
+    </>
   );
 };
