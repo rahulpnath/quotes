@@ -16,21 +16,22 @@ server.use(
 );
 
 router.render = (req, res) => {
-  const customResponseHeader = req.headers['custom-response'];
-  const customResponses = customResponseHeader && customResponseHeader.split(' ');
+  // const customResponseHeader = req.headers['custom-response'];
+  // const customResponses = customResponseHeader && customResponseHeader.split(' ');
 
+  const scenariosHeader = req.headers['scenarios'];
+  const scenarios = scenariosHeader ? scenariosHeader.split(' ') : [];
+  
   let customResponse = null;
-  if (customResponseHeader && customResponses.length > 0) {
+  if (scenarios.length > 0) {
     customResponse = responses.find(
-      response => customResponses.includes(response.code) && response.urls.includes(req.originalUrl)
+      response => scenarios.includes(response.code) && response.urls.includes(req.originalUrl)
     );
   }
 
   if (customResponse) {
     res.status(customResponse.httpStatus).jsonp(customResponse.respone);
   } else {
-    const scenariosHeader = req.headers['scenarios'];
-    const scenarios = scenariosHeader ? scenariosHeader.split(' ') : [];
     const data = res.locals.data;
     if (scenariosHeader && Array.isArray(data) && data.length > 0) {
       const filteredByScenario = data.filter(d =>

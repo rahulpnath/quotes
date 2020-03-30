@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { QuoteSummaryDto } from './api-models';
+import http from './http';
 
 export async function loadAllQuotes(): Promise<QuoteSummaryDto[]> {
-  const response = await axios.get<QuoteSummaryDto[]>('/api/quotes');
+  const response = await http.get<QuoteSummaryDto[]>('/api/quotes');
   return response.data;
 }
