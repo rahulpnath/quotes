@@ -1,10 +1,65 @@
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { QuoteStatusCode, QuoteSummaryDto } from 'api/api-models';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { LoadingPane } from 'views/components/application/LoadingPane';
 import { PageLayout } from 'views/components/application/PageLayout';
+import styles from './QuotesList.module.scss';
+import { QuoteStatus } from './QuoteStatus';
 
 export const QuotesList: React.FC = () => {
+  const quotes: QuoteSummaryDto[] = [
+    {
+      id: '1',
+      quoteNumber: 1,
+      statusCode: QuoteStatusCode.Draft,
+      lastModifiedAt: new Date(),
+      customerName: 'vincent',
+      mobilePhoneDescription: 'iphone 20',
+    },
+    {
+      id: '2',
+      quoteNumber: 2,
+      statusCode: QuoteStatusCode.Accepted,
+      lastModifiedAt: new Date(),
+      customerName: 'rahul',
+      mobilePhoneDescription: 'iphone 21',
+    },
+  ];
+  const history = useHistory();
+
   return (
     <PageLayout title="All Quotes" parent="none">
-      <p>A list of quotes.</p>
+      <LoadingPane isLoading={false}>
+        <Table className={styles.table}>
+          <TableHead className={styles.tablehead}>
+            <TableRow>
+              <TableCell>Quote #</TableCell>
+              <TableCell>Customer Name</TableCell>
+              <TableCell>Mobile Phone Description</TableCell>
+              <TableCell align="center">Status</TableCell>
+              <TableCell>Last Modified</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {quotes.map(q => {
+              const openQuote = () => history.push(`/quotes/${q.id}`);
+              return (
+                <TableRow key={q.id} className={styles.row}>
+                  <TableCell onClick={openQuote}>{q.quoteNumber}</TableCell>
+                  <TableCell onClick={openQuote}>{q.customerName}</TableCell>
+                  <TableCell onClick={openQuote}>{q.mobilePhoneDescription}</TableCell>
+                  <TableCell onClick={openQuote} align="center">
+                    <QuoteStatus statusCode={q.statusCode}></QuoteStatus>
+                  </TableCell>
+                  <TableCell onClick={openQuote}>{q.lastModifiedAt.toLocaleString()}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+        {quotes.length === 0 && <p className={styles.noquotes}>There are no matching Quotes.</p>}
+      </LoadingPane>
     </PageLayout>
   );
 };

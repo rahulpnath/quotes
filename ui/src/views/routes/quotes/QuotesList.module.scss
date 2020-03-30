@@ -1,0 +1,31 @@
+.actions {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.newquote {
+  width: 12rem;
+}
+
+.table {
+  margin-top: 1rem;
+}
+
+.tablehead {
+  background-color: lightgray;
+}
+
+.row {
+  cursor: pointer;
+
+  &:hover {
+    td {
+      color: darkslateblue;
+    }
+  }
+}
+
+.noquotes {
+  text-align: center;
+}
