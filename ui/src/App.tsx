@@ -33,9 +33,6 @@ export const App: React.FC<IAppProps> = ({ history }) => {
     get quotes() {
       return allQuotes;
     },
-    set quotes(value) {
-      setAllQuotes(value);
-    },
     async loadQuotes() {
       const quotes = await QuotesApi.loadAllQuotes();
       setAllQuotes(quotes);

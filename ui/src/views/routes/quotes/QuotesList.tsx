@@ -13,7 +13,8 @@ export const QuotesList: React.FC = () => {
 
   useEffect(() => {
     store.loadQuotes();
-  }, [store]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const createQuote = () => {};
 
