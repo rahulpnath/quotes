@@ -1,6 +1,7 @@
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { useQuotesStore, useStore } from 'hooks';
-import React, { useEffect } from 'react';
+import { QuoteSummaryDto } from 'api/api-models';
+import * as QuotesApi from 'api/quotes.api';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LoadingPane } from 'views/components/application/LoadingPane';
 import { PageLayout } from 'views/components/application/PageLayout';
@@ -9,12 +10,14 @@ import { QuoteStatus } from './QuoteStatus';
 
 export const QuotesList: React.FC = () => {
   const history = useHistory();
-  const store = useStore();
-  const quotesStore = useQuotesStore();
+  const [quotes, setQuotes] = useState<QuoteSummaryDto[]>([]);
+  const loadQuotes = async () => {
+    setQuotes(await QuotesApi.loadAllQuotes());
+  };
 
   useEffect(() => {
-    store.loadQuotes();
-  }, [store]);
+    loadQuotes();
+  }, []);
 
   const createQuote = () => {};
 
@@ -41,7 +44,7 @@ export const QuotesList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {quotesStore.quotes.map(q => {
+            {quotes.map(q => {
               const openQuote = () => history.push(`/quotes/${q.id}`);
               return (
                 <TableRow key={q.id} className={styles.row}>
@@ -57,7 +60,7 @@ export const QuotesList: React.FC = () => {
             })}
           </TableBody>
         </Table>
-        {quotesStore.quotes.length === 0 && (
+        {quotes.length === 0 && (
           <p data-cy="noquotes" className={styles.noquotes}>
             There are no matching Quotes.
           </p>
