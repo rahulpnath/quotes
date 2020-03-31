@@ -4,6 +4,8 @@ import * as QuotesApi from 'api/quotes.api';
 import { History } from 'history';
 import React, { useState } from 'react';
 import { Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { Routes } from 'views/routes/Routes';
 import './App.css';
 
@@ -43,6 +45,7 @@ export const App: React.FC<IAppProps> = ({ history }) => {
   return (
     <StoreContext.Provider value={store}>
       <CssBaseline />
+      <ToastContainer />
       <Router history={history}>
         <Routes />
       </Router>

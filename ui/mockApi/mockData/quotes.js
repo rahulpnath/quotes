@@ -12,7 +12,7 @@ module.exports = [
   },
   {
     scenarios: ['draft', 'phone'],
-    id: '1',
+    id: '2',
     statusCode: 'Draft',
     lastModifiedAt: '2-Mar-2020',
     customer: {
@@ -25,7 +25,7 @@ module.exports = [
   },
   {
     scenarios: ['open', 'phone'],
-    id: '1',
+    id: '3',
     statusCode: 'Open',
     lastModifiedAt: '20-Mar-2020',
     customer: {

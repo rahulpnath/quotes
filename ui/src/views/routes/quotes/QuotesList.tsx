@@ -57,7 +57,9 @@ export const QuotesList: React.FC = () => {
           </TableBody>
         </Table>
         {store.quotes.length === 0 && (
-          <p className={styles.noquotes}>There are no matching Quotes.</p>
+          <p data-cy="noquotes" className={styles.noquotes}>
+            There are no matching Quotes.
+          </p>
         )}
       </LoadingPane>
     </PageLayout>
