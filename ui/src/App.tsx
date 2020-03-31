@@ -14,38 +14,44 @@ interface IAppProps {
 }
 
 export interface IStore {
-  quotes: QuoteSummaryDto[];
   loadQuotes: () => void | Promise<void>;
 }
 
+export interface IQuotesStore {
+  quotes: QuoteSummaryDto[];
+}
+
 export const StoreContext = React.createContext<IStore>({
-  quotes: [],
   loadQuotes: () => {},
 });
 
+export const QuotesStoreContext = React.createContext<IQuotesStore>({
+  quotes: [],
+});
+
 export const App: React.FC<IAppProps> = ({ history }) => {
-  const [allQuotes, setAllQuotes] = useState<QuoteSummaryDto[]>([]);
+  const [quotesStore, setQuotesStore] = useState<IQuotesStore>({
+    quotes: [],
+  });
 
   // global state store for these use cases:
   // the states which need to be shared across multiple views
   // the states needs to be cached locally after switching views
-  const store: IStore = {
-    get quotes() {
-      return allQuotes;
-    },
+  const [store] = useState<IStore>({
     async loadQuotes() {
-      const quotes = await QuotesApi.loadAllQuotes();
-      setAllQuotes(quotes);
+      setQuotesStore({ quotes: await QuotesApi.loadAllQuotes() });
     },
-  };
+  });
 
   return (
     <StoreContext.Provider value={store}>
-      <CssBaseline />
-      <ToastContainer />
-      <Router history={history}>
-        <Routes />
-      </Router>
+      <QuotesStoreContext.Provider value={quotesStore}>
+        <CssBaseline />
+        <ToastContainer />
+        <Router history={history}>
+          <Routes />
+        </Router>
+      </QuotesStoreContext.Provider>
     </StoreContext.Provider>
   );
 };

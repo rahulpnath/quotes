@@ -1,5 +1,5 @@
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { useStore } from 'hooks';
+import { useQuotesStore, useStore } from 'hooks';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { LoadingPane } from 'views/components/application/LoadingPane';
@@ -10,11 +10,11 @@ import { QuoteStatus } from './QuoteStatus';
 export const QuotesList: React.FC = () => {
   const history = useHistory();
   const store = useStore();
+  const quotesStore = useQuotesStore();
 
   useEffect(() => {
     store.loadQuotes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [store]);
 
   const createQuote = () => {};
 
@@ -41,7 +41,7 @@ export const QuotesList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {store.quotes.map(q => {
+            {quotesStore.quotes.map(q => {
               const openQuote = () => history.push(`/quotes/${q.id}`);
               return (
                 <TableRow key={q.id} className={styles.row}>
@@ -57,7 +57,7 @@ export const QuotesList: React.FC = () => {
             })}
           </TableBody>
         </Table>
-        {store.quotes.length === 0 && (
+        {quotesStore.quotes.length === 0 && (
           <p data-cy="noquotes" className={styles.noquotes}>
             There are no matching Quotes.
           </p>
