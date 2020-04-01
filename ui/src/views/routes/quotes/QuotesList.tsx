@@ -48,13 +48,21 @@ export const QuotesList: React.FC = () => {
               const openQuote = () => history.push(`/quotes/${q.id}`);
               return (
                 <TableRow key={q.id} className={styles.row}>
-                  <TableCell onClick={openQuote}>{q.quoteNumber}</TableCell>
-                  <TableCell onClick={openQuote}>{q.customerName}</TableCell>
-                  <TableCell onClick={openQuote}>{q.mobilePhoneDescription}</TableCell>
-                  <TableCell onClick={openQuote} align="center">
+                  <TableCell data-cy="quoteNumber" onClick={openQuote}>
+                    {q.quoteNumber}
+                  </TableCell>
+                  <TableCell data-cy="customerName" onClick={openQuote}>
+                    {q.customerName}
+                  </TableCell>
+                  <TableCell data-cy="mobilePhoneDescription" onClick={openQuote}>
+                    {q.mobilePhoneDescription}
+                  </TableCell>
+                  <TableCell data-cy="statusCode" onClick={openQuote} align="center">
                     <QuoteStatus statusCode={q.statusCode}></QuoteStatus>
                   </TableCell>
-                  <TableCell onClick={openQuote}>{q.lastModifiedAt.toLocaleString()}</TableCell>
+                  <TableCell data-cy="lastModifiedAt" onClick={openQuote}>
+                    {q.lastModifiedAt.toLocaleString()}
+                  </TableCell>
                 </TableRow>
               );
             })}

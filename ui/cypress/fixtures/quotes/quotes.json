@@ -1,0 +1,39 @@
+[
+  {
+    "id": "1",
+    "statusCode": "Draft",
+    "lastModifiedAt": "2-Mar-2020",
+    "customerName": "Rahul Nath"
+  },
+  {
+    "id": "2",
+    "statusCode": "Draft",
+    "lastModifiedAt": "2-Mar-2020",
+    "customerName": "Vincent Zhao",
+    "mobilePhoneDescription": "iPhone X"
+  },
+  {
+    "id": "3",
+    "quoteNumber": "ABC123",
+    "statusCode": "Open",
+    "lastModifiedAt": "20-Mar-2020",
+    "customerName": "Peter Stanbrige",
+    "mobilePhoneDescription": "iPhone X"
+  },
+  {
+    "id": "4",
+    "quoteNumber": "EFG123",
+    "statusCode": "Accepted",
+    "lastModifiedAt": "20-Mar-2020",
+    "customerName": "Bob Martin",
+    "mobilePhoneDescription": "iPhone X"
+  },
+  {
+    "id": "5",
+    "quoteNumber": "XYZ123",
+    "statusCode": "Expired",
+    "lastModifiedAt": "20-Jan-2020",
+    "customerName": "John Stone",
+    "mobilePhoneDescription": "iPhone X"
+  }
+]
