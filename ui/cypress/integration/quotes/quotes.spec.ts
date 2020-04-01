@@ -19,6 +19,28 @@ describe('Quotes', () => {
       cy.get('.Toastify');
       cy.findByText('Unable to get data.');
     });
+
+    it('Shows one open quote', () => {
+      cy.setScenarios('open');
+      cy.visit('/');
+      cy.get('[data-cy=table]')
+        .find('[data-cy=row]')
+        .should('have.length', 1);
+    });
+
+    it('Shows two draft quotes', () => {
+      cy.setScenarios('draft');
+      cy.visit('/');
+      cy.get('[data-cy=table]')
+        .find('[data-cy=row]')
+        .should('have.length', 2);
+    });
+
+    it('No quotes shows empty message', () => {
+      cy.setScenarios('noquotes');
+      cy.visit('/');
+      cy.get('[data-cy=noquotes]');
+    });
   });
 
   describe('Fixture Data', () => {

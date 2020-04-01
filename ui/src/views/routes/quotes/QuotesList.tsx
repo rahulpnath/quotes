@@ -33,7 +33,7 @@ export const QuotesList: React.FC = () => {
         </Button>
       </div>
       <LoadingPane isLoading={false}>
-        <Table className={styles.table}>
+        <Table className={styles.table} data-cy="table">
           <TableHead className={styles.tablehead}>
             <TableRow>
               <TableCell>Quote #</TableCell>
@@ -47,7 +47,7 @@ export const QuotesList: React.FC = () => {
             {quotes.map(q => {
               const openQuote = () => history.push(`/quotes/${q.id}`);
               return (
-                <TableRow key={q.id} className={styles.row}>
+                <TableRow key={q.id} className={styles.row} data-cy="row">
                   <TableCell data-cy="quoteNumber" onClick={openQuote}>
                     {q.quoteNumber}
                   </TableCell>
