@@ -20,5 +20,9 @@ import './commands';
 // require('./commands')
 
 Cypress.Commands.add('setScenarios', scenarios => {
-  window.localStorage.setItem('selectedScenarios', scenarios);
+  const scenarioItem = {
+    name: 'Test',
+    scenarios: scenarios.split(' '),
+  };
+  window.localStorage.setItem('selectedScenarioGroup', JSON.stringify(scenarioItem));
 });

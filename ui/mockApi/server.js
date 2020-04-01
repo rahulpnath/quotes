@@ -1,9 +1,9 @@
 const jsonServer = require('json-server');
 const data = require('./mockData');
-const responses = require('./responses');
+const renderHelpers = require('./renderHelpers');
+
 const server = jsonServer.create();
 const router = jsonServer.router(data);
-
 const middlewares = jsonServer.defaults();
 
 server.use(middlewares);
@@ -11,31 +11,27 @@ server.use(middlewares);
 server.use(
   jsonServer.rewriter({
     '/api/*': '/$1',
-    '/quotes': '/quotesSummary/',
   })
 );
 
 router.render = (req, res) => {
-  // const customResponseHeader = req.headers['custom-response'];
-  // const customResponses = customResponseHeader && customResponseHeader.split(' ');
-
   const scenariosHeader = req.headers['scenarios'];
   const scenarios = scenariosHeader ? scenariosHeader.split(' ') : [];
-  
-  let customResponse = null;
-  if (scenarios.length > 0) {
-    customResponse = responses.find(
-      response => scenarios.includes(response.code) && response.urls.includes(req.originalUrl)
-    );
-  }
+  const url = renderHelpers.removeTrailingSlashes(req.originalUrl);
+
+  let customResponse = renderHelpers.getCustomReponse(url, scenarios);
 
   if (customResponse) {
     res.status(customResponse.httpStatus).jsonp(customResponse.respone);
   } else {
-    const data = res.locals.data;
+    let data = res.locals.data;
+
+    if (url === '/api/quotes' && req.method === 'GET') {
+      data = data.map(renderHelpers.toQuoteSummary);
+    }
     if (scenariosHeader && Array.isArray(data) && data.length > 0) {
       const filteredByScenario = data.filter(d =>
-        scenarios.every(scenario => d.scenarios.includes(scenario))
+        scenarios.every(scenario => d.scenarios && d.scenarios.includes(scenario))
       );
       res.jsonp(filteredByScenario);
     } else res.jsonp(data);
