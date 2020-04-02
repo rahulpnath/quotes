@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { getSelectedScenario } from 'views/components/ScenarioSelector/scenarioLocalStorageProvider';
 
 const http = axios.create();
 
@@ -7,7 +8,9 @@ if (process.env.NODE_ENV === 'development') {
   http.interceptors.request.use(
     async request => {
       const storage = window.localStorage;
-      if (storage) request.headers['scenarios'] = storage.getItem('selectedScenarios') || '';
+      const selectedScenario = getSelectedScenario();
+      if (storage)
+        request.headers['scenarios'] = selectedScenario ? selectedScenario.scenarios.join(' ') : '';
       return request;
     },
     error => Promise.reject(error)
