@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { LoadingPane } from 'views/components/application/LoadingPane';
 import { PageLayout } from 'views/components/application/PageLayout';
+import { CustomerSection } from './CustomerSection';
 import styles from './Quote.module.scss';
 import { QuoteStatus } from './QuoteStatus';
 
@@ -36,7 +37,9 @@ export const Quote: React.FC = () => {
       parent={['All Quotes', '/quotes']}
       audit={audit}>
       <LoadingPane isLoading={false}>
-        <div className={styles.content}></div>
+        <div className={styles.content}>
+          <CustomerSection></CustomerSection>
+        </div>
       </LoadingPane>
     </PageLayout>
   );

@@ -1,0 +1,25 @@
+.title {
+  font-weight: bold;
+  font-size: 110%;
+}
+
+.expand {
+  color: red;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  padding: 8px 24px 16px 24px;
+
+  > :not(.spacer) {
+    min-width: 7em;
+    margin: 4px 8px;
+  }
+}

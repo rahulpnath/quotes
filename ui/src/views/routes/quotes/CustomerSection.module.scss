@@ -1,0 +1,25 @@
+.fields {
+  display: grid;
+  max-width: 40em;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas:
+    'name phone'
+    'address email';
+  column-gap: 16px;
+
+  .name {
+    grid-area: name;
+  }
+
+  .phone {
+    grid-area: phone;
+  }
+
+  .address {
+    grid-area: address;
+  }
+
+  .email {
+    grid-area: email;
+  }
+}
