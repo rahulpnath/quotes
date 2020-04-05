@@ -1,6 +1,6 @@
-const responses = require('./responses');
+import responses from './responses';
 
-const getCustomReponse = (url, scenarios) => {
+export const getCustomReponse = (url, scenarios) => {
   if (!scenarios || scenarios.length === 0) return null;
 
   return responses.find(
@@ -8,7 +8,7 @@ const getCustomReponse = (url, scenarios) => {
   );
 };
 
-const toQuoteSummary = quote => ({
+export const toQuoteSummary = quote => ({
   id: quote.id,
   scenarios: quote.scenarios,
   quoteNumber: quote.quoteNumber,
@@ -18,10 +18,5 @@ const toQuoteSummary = quote => ({
   mobilePhoneDescription: quote.mobilePhone && quote.mobilePhone.serialNo,
 });
 
-const removeTrailingSlashes = url => url.replace(/\/+$/, '');
+export const removeTrailingSlashes = url => url.replace(/\/+$/, '');
 
-module.exports = {
-  toQuoteSummary,
-  removeTrailingSlashes,
-  getCustomReponse,
-};

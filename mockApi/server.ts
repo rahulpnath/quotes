@@ -1,6 +1,6 @@
-const jsonServer = require('json-server');
-const data = require('./mockData');
-const renderHelpers = require('./renderHelpers');
+import jsonServer from 'json-server';
+import data from './mockData';
+import * as renderHelpers from './renderHelpers';
 
 const server = jsonServer.create();
 const router = jsonServer.router(data);
@@ -14,6 +14,7 @@ server.use(
   })
 );
 
+// @ts-ignore
 router.render = (req, res) => {
   const scenariosHeader = req.headers['scenarios'];
   const scenarios = scenariosHeader ? scenariosHeader.split(' ') : [];
