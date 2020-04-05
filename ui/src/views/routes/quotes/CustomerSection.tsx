@@ -1,12 +1,15 @@
 import { TextField } from '@material-ui/core';
 import { CustomerDto } from 'api/api-models';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './CustomerSection.module.scss';
+import { QuoteContext } from './Quote';
 import { QuoteSection } from './QuoteSection';
 
 export const CustomerSection: React.FC = () => {
   const readOnly = false;
+
+  const quote = useContext(QuoteContext);
 
   // TODO
   const sectionTitle = 'Customer';
@@ -52,8 +55,16 @@ export const CustomerSection: React.FC = () => {
           className={styles.email}
           name="email"
           label="Email"
-          inputRef={register}
+          inputRef={register({
+            pattern: {
+              value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: 'Please provide a valid email address',
+            },
+            required: { value: true, message: 'Email is required' },
+          })}
           inputProps={{ readOnly }}
+          error={!!errors.email}
+          helperText={errors?.email?.message}
         />
       </div>
     </QuoteSection>
