@@ -30,8 +30,8 @@ router.render = (req, res) => {
       data = data.map(renderHelpers.toQuoteSummary);
     }
     if (scenariosHeader && Array.isArray(data) && data.length > 0) {
-      const filteredByScenario = data.filter(d =>
-        scenarios.every(scenario => d.scenarios && d.scenarios.includes(scenario))
+      const filteredByScenario = data.filter((d) =>
+        scenarios.every((scenario) => d.scenarios && d.scenarios.includes(scenario))
       );
       res.jsonp(filteredByScenario);
     } else res.jsonp(data);
