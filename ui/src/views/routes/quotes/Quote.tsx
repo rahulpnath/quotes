@@ -8,18 +8,25 @@ import { CustomerSection } from './CustomerSection';
 import styles from './Quote.module.scss';
 import { QuoteStatus } from './QuoteStatus';
 
-export const QuoteContext = React.createContext<QuoteDto | null>(null);
+export interface IQuoteContext {
+  quote?: QuoteDto;
+  isLoading: boolean;
+}
+
+export const QuoteContext = React.createContext<IQuoteContext>({ isLoading: true });
 
 export const Quote: React.FC = () => {
   const { quoteId } = useParams();
-  const [quote, setQuote] = useState<QuoteDto | null>(null);
+  const [isLoading, setLoading] = useState<boolean>(true);
+  const [quote, setQuote] = useState<QuoteDto | undefined>(undefined);
 
   const loadQuote = async (id: string) => {
     setQuote(await QuotesApi.loadQuote(id || ''));
+    setLoading(false);
   };
 
   React.useEffect(() => {
-    quoteId && loadQuote(quoteId);
+    !!quoteId ? loadQuote(quoteId) : setLoading(false);
   }, [quoteId]);
 
   const title = quoteId
@@ -38,13 +45,13 @@ export const Quote: React.FC = () => {
   ) : null;
 
   return (
-    <QuoteContext.Provider value={quote}>
+    <QuoteContext.Provider value={{ quote, isLoading }}>
       <PageLayout
         title={title}
         subtitle={quoteStatus}
         parent={['All Quotes', '/quotes']}
         audit={audit}>
-        <LoadingPane isLoading={false}>
+        <LoadingPane isLoading={isLoading}>
           <div className={styles.content}>
             <CustomerSection></CustomerSection>
           </div>

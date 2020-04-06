@@ -16,6 +16,8 @@ import styles from './QuoteSection.module.scss';
 export interface IQuoteSectionProps<T> {
   sectionTitle: string;
   sectionSummary?: string;
+  expandedDefault: boolean;
+  editableDefault: boolean;
   onSubmit: (data: T) => void | Promise<void>;
   formMethods: FormContextValues<T>;
   children: (editable: boolean) => React.ReactNode;
@@ -24,19 +26,21 @@ export interface IQuoteSectionProps<T> {
 export function QuoteSection<T>({
   sectionTitle,
   sectionSummary,
+  expandedDefault,
+  editableDefault,
   onSubmit,
   formMethods,
   children,
 }: IQuoteSectionProps<T>) {
-  const { register, handleSubmit, reset, errors } = formMethods;
+  const { handleSubmit, reset } = formMethods;
   const formSubmit = async (data: T) => {
     await onSubmit(data);
     // TODO: toggle button status
   };
   const sectionData = true;
 
-  const [expanded, setExpanded] = React.useState<boolean>(true);
-  const [editable, setEditable] = React.useState<boolean>(true);
+  const [expanded, setExpanded] = React.useState<boolean>(expandedDefault);
+  const [editable, setEditable] = React.useState<boolean>(editableDefault);
   const IconComponent = sectionData ? ExpandMoreIcon : expanded ? CloseIcon : AddIcon;
   const icon = <IconComponent className={styles.expand} />;
 
@@ -74,7 +78,14 @@ export function QuoteSection<T>({
                 </Button>
                 <div className={styles.spacer} aria-hidden="true" />
                 {!!sectionData && <Button variant="contained">Clear</Button>}
-                <Button variant="contained">Cancel</Button>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    reset();
+                    setEditable(false);
+                  }}>
+                  Cancel
+                </Button>
               </>
             ) : (
               <Button

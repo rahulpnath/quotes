@@ -10,20 +10,9 @@ import { QuoteSection } from './QuoteSection';
 
 export const CustomerSection: React.FC = () => {
   const history = useHistory();
-  const quote = useContext(QuoteContext);
+  const { quote } = useContext(QuoteContext);
   const formMethods = useForm<CustomerDto>();
-  const { register, errors, setValue } = formMethods;
-
-  React.useEffect(() => {
-    // dont know why setting defaultValue on TextField didn't work
-    // e.g defaultValue={quote?.customer.name}
-    // refer to https://react-hook-form.com/get-started#Integrateglobalstate
-    // set the value explicitly here as a second option
-    setValue('name', quote?.customer.name);
-    setValue('phone', quote?.customer.phone);
-    setValue('email', quote?.customer.email);
-    setValue('address', quote?.customer.address);
-  }, [quote, setValue]);
+  const { register, errors } = formMethods;
 
   const onSubmit = async (data: CustomerDto) => {
     if (quote) {
@@ -47,18 +36,26 @@ export const CustomerSection: React.FC = () => {
     }
   };
 
+  /*
+    Caveat: https://github.com/mui-org/material-ui/issues/11150
+    defaultValue in TextField won't update when the component reloads
+    use a LoadingPane to prevent the component from rendering until the data is fetched
+ */
   return (
     <QuoteSection<CustomerDto>
       sectionTitle={quote ? quote.customer.name : ''}
       sectionSummary=""
+      expandedDefault={!quote}
+      editableDefault={!quote}
       formMethods={formMethods}
       onSubmit={onSubmit}>
-      {editable => (
+      {(editable) => (
         <div className={styles.fields}>
           <TextField
             className={styles.name}
             name="name"
             label="Full Name"
+            defaultValue={quote?.customer.name}
             inputRef={register({ required: { value: true, message: 'Name is required' } })}
             inputProps={{ readOnly: !editable }}
             error={!!errors.name}
@@ -69,6 +66,7 @@ export const CustomerSection: React.FC = () => {
             className={styles.phone}
             name="phone"
             label="Phone"
+            defaultValue={quote?.customer.phone}
             inputRef={register}
             inputProps={{ readOnly: !editable }}
             InputLabelProps={{ shrink: true }}
@@ -77,6 +75,7 @@ export const CustomerSection: React.FC = () => {
             className={styles.address}
             name="address"
             label="Home Address"
+            defaultValue={quote?.customer.address}
             inputRef={register({ required: { value: true, message: 'Address is required' } })}
             inputProps={{ readOnly: !editable }}
             InputLabelProps={{ shrink: true }}
@@ -85,6 +84,7 @@ export const CustomerSection: React.FC = () => {
             className={styles.email}
             name="email"
             label="Email"
+            defaultValue={quote?.customer.email}
             inputRef={register({
               pattern: {
                 value: /^(([^<>()[]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
