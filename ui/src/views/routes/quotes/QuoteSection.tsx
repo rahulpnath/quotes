@@ -16,6 +16,7 @@ import styles from './QuoteSection.module.scss';
 export interface IQuoteSectionProps<T> {
   sectionTitle: string;
   sectionSummary?: string;
+  isEmpty: boolean;
   expandedDefault: boolean;
   editableDefault: boolean;
   onSubmit: (data: T) => void | Promise<void>;
@@ -26,6 +27,7 @@ export interface IQuoteSectionProps<T> {
 export function QuoteSection<T>({
   sectionTitle,
   sectionSummary,
+  isEmpty,
   expandedDefault,
   editableDefault,
   onSubmit,
@@ -35,13 +37,13 @@ export function QuoteSection<T>({
   const { handleSubmit, reset } = formMethods;
   const formSubmit = async (data: T) => {
     await onSubmit(data);
-    // TODO: toggle button status
+    setEditable(false);
   };
-  const sectionData = true;
 
   const [expanded, setExpanded] = React.useState<boolean>(expandedDefault);
   const [editable, setEditable] = React.useState<boolean>(editableDefault);
-  const IconComponent = sectionData ? ExpandMoreIcon : expanded ? CloseIcon : AddIcon;
+
+  const IconComponent = !isEmpty ? ExpandMoreIcon : expanded ? CloseIcon : AddIcon;
   const icon = <IconComponent className={styles.expand} />;
 
   return (
@@ -51,7 +53,7 @@ export function QuoteSection<T>({
         onChange={(_, e) => {
           setExpanded(e);
           if (editable) {
-            //resetForm();
+            reset();
             setEditable(false);
           }
         }}>
@@ -69,34 +71,38 @@ export function QuoteSection<T>({
           )}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>{children(editable)}</ExpansionPanelDetails>
-        {editable && (
-          <ExpansionPanelActions className={styles.actions} {...{ disableSpacing: true }}>
-            {editable ? (
-              <>
-                <Button type="submit" color="primary" variant="contained">
-                  Save
-                </Button>
-                <div className={styles.spacer} aria-hidden="true" />
-                {!!sectionData && <Button variant="contained">Clear</Button>}
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    reset();
-                    setEditable(false);
-                  }}>
-                  Cancel
-                </Button>
-              </>
-            ) : (
-              <Button
-                onClick={() => {
-                  setEditable(true);
-                }}>
-                Edit
+        <ExpansionPanelActions className={styles.actions} {...{ disableSpacing: true }}>
+          {editable ? (
+            <>
+              <Button type="submit" color="primary" variant="contained">
+                Save
               </Button>
-            )}
-          </ExpansionPanelActions>
-        )}
+              <div className={styles.spacer} aria-hidden="true" />
+              <Button
+                variant="contained"
+                color="secondary"
+                type="button"
+                onClick={(e) => {
+                  reset();
+                  setEditable(false);
+                  e.preventDefault();
+                }}>
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="contained"
+              color="secondary"
+              type="button"
+              onClick={(e) => {
+                setEditable(true);
+                e.preventDefault();
+              }}>
+              Edit
+            </Button>
+          )}
+        </ExpansionPanelActions>
       </ExpansionPanel>
     </form>
   );
