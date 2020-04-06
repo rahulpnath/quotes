@@ -7,6 +7,6 @@ export async function loadAllQuotes(): Promise<QuoteSummaryDto[]> {
 }
 
 export async function loadQuote(id: string): Promise<QuoteDto> {
-  const response = await http.get<QuoteDto>(`/api/quote/${id}`);
+  const response = await http.get<QuoteDto>(`/api/quotes/${id}`);
   return response.data;
 }

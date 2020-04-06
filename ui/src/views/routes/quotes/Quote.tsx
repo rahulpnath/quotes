@@ -13,11 +13,14 @@ export const QuoteContext = React.createContext<QuoteDto | null>(null);
 export const Quote: React.FC = () => {
   const { quoteId } = useParams();
   const [quote, setQuote] = useState<QuoteDto | null>(null);
-  const QuoteContext = React.createContext<QuoteDto | null>(null);
 
-  const loadQuote = async () => {
-    setQuote(await QuotesApi.loadQuote(quoteId || ''));
+  const loadQuote = async (id: string) => {
+    setQuote(await QuotesApi.loadQuote(id || ''));
   };
+
+  React.useEffect(() => {
+    quoteId && loadQuote(quoteId);
+  }, [quoteId]);
 
   const title = quoteId
     ? quote?.statusCode === QuoteStatusCode.Draft
