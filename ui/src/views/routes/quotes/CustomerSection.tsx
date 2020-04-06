@@ -53,7 +53,7 @@ export const CustomerSection: React.FC = () => {
       sectionSummary=""
       formMethods={formMethods}
       onSubmit={onSubmit}>
-      {({ editable }) => (
+      {editable => (
         <div className={styles.fields}>
           <TextField
             className={styles.name}

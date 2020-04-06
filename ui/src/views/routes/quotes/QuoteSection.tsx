@@ -18,7 +18,7 @@ export interface IQuoteSectionProps<T> {
   sectionSummary?: string;
   onSubmit: (data: T) => void | Promise<void>;
   formMethods: FormContextValues<T>;
-  children: (args: { editable: boolean }) => React.ReactNode;
+  children: (editable: boolean) => React.ReactNode;
 }
 
 export function QuoteSection<T>({
@@ -64,7 +64,7 @@ export function QuoteSection<T>({
             </>
           )}
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>{children({ editable })}</ExpansionPanelDetails>
+        <ExpansionPanelDetails>{children(editable)}</ExpansionPanelDetails>
         {editable && (
           <ExpansionPanelActions className={styles.actions} {...{ disableSpacing: true }}>
             {editable ? (
