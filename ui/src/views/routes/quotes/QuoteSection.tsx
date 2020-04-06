@@ -18,7 +18,7 @@ export interface IQuoteSectionProps<T> {
   sectionSummary?: string;
   onSubmit: (data: T) => void | Promise<void>;
   formMethods: FormContextValues<T>;
-  children: React.ReactNode;
+  children: (args: { editable: boolean }) => React.ReactNode;
 }
 
 export function QuoteSection<T>({
@@ -29,8 +29,9 @@ export function QuoteSection<T>({
   children,
 }: IQuoteSectionProps<T>) {
   const { register, handleSubmit, reset, errors } = formMethods;
-  const formSubmit = (data: T) => {
-    console.log({ data });
+  const formSubmit = async (data: T) => {
+    await onSubmit(data);
+    // TODO: toggle button status
   };
   const sectionData = true;
 
@@ -63,7 +64,7 @@ export function QuoteSection<T>({
             </>
           )}
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
+        <ExpansionPanelDetails>{children({ editable })}</ExpansionPanelDetails>
         {editable && (
           <ExpansionPanelActions className={styles.actions} {...{ disableSpacing: true }}>
             {editable ? (

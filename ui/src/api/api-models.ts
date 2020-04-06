@@ -9,9 +9,9 @@
 
 export interface CustomerDto {
   name: string;
-  address: string | undefined;
+  address: string;
   phone?: string | undefined;
-  email: string | undefined;
+  email: string;
 }
 
 export interface QuoteDto {
@@ -46,19 +46,15 @@ export interface QuoteAccessoryDto {
   unitPrice: number;
 }
 
-export interface AddQuoteResponse {
+export interface CreateQuoteResponse {
   id: string;
 }
 
-export interface AddQuoteCommand {
+export interface CreateQuoteCommand {
   customerName: string;
   customerAddress: string;
   customerPhone?: string | undefined;
   customerEmail: string;
-  mobilePhoneMake?: string | undefined;
-  mobilePhoneModel?: string | undefined;
-  price?: number | undefined;
-  discount?: number | undefined;
 }
 
 export interface UpdateQuoteCustomerCommand {
