@@ -50,7 +50,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AddQuoteCommand"
+              $ref: "#/components/schemas/CreateQuoteCommand"
         required: true
       responses:
         "200":
@@ -58,7 +58,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AddQuoteResponse"
+                $ref: "#/components/schemas/CreateQuoteResponse"
     get:
       tags:
         - Quotes
@@ -231,13 +231,11 @@ components:
           type: string
         address:
           type: string
-          nullable: true
         phone:
           type: string
           nullable: true
         email:
           type: string
-          nullable: true
       required:
         - name
         - address
@@ -319,7 +317,7 @@ components:
         - description
         - quantity
         - unitPrice
-    AddQuoteResponse:
+    CreateQuoteResponse:
       type: object
       additionalProperties: false
       properties:
@@ -327,7 +325,7 @@ components:
           type: string
       required:
         - id
-    AddQuoteCommand:
+    CreateQuoteCommand:
       type: object
       additionalProperties: false
       properties:
@@ -340,20 +338,6 @@ components:
           nullable: true
         customerEmail:
           type: string
-        mobilePhoneMake:
-          type: string
-          nullable: true
-        mobilePhoneModel:
-          type: string
-          nullable: true
-        price:
-          type: number
-          format: decimal
-          nullable: true
-        discount:
-          type: number
-          format: decimal
-          nullable: true
       required:
         - customerName
         - customerAddress

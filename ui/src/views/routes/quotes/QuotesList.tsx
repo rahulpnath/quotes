@@ -2,7 +2,7 @@ import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mater
 import { QuoteSummaryDto } from 'api/api-models';
 import * as QuotesApi from 'api/quotes.api';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { LoadingPane } from 'views/components/application/LoadingPane';
 import { PageLayout } from 'views/components/application/PageLayout';
 import styles from './QuotesList.module.scss';
@@ -19,8 +19,6 @@ export const QuotesList: React.FC = () => {
     loadQuotes();
   }, []);
 
-  const createQuote = () => {};
-
   return (
     <PageLayout title="All Quotes" parent="none">
       <div className={styles.actions}>
@@ -28,7 +26,8 @@ export const QuotesList: React.FC = () => {
           className={styles.newquote}
           color="primary"
           variant="contained"
-          onClick={createQuote}>
+          component={Link}
+          to="/quotes/new">
           Create Quote
         </Button>
       </div>
