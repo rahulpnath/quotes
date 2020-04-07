@@ -1,14 +1,16 @@
-import responses from './responses';
+import { scenariosForEndpoint } from "./mock-models";
+import responses from "./responses";
 
 export const getCustomReponse = (url, scenarios) => {
   if (!scenarios || scenarios.length === 0) return null;
 
   return responses.find(
-    response => scenarios.includes(response.code) && response.urls.includes(url)
+    (response) =>
+      scenarios.includes(response.code) && response.urls.includes(url)
   );
 };
 
-export const toQuoteSummary = quote => ({
+export const toQuoteSummary = (quote) => ({
   id: quote.id,
   scenarios: quote.scenarios,
   quoteNumber: quote.quoteNumber,
@@ -18,5 +20,12 @@ export const toQuoteSummary = quote => ({
   mobilePhoneDescription: quote.mobilePhone && quote.mobilePhone.serialNo,
 });
 
-export const removeTrailingSlashes = url => url.replace(/\/+$/, '');
+export const removeTrailingSlashes = (url) => url.replace(/\/+$/, "");
 
+export const getScenariosApplicableToEndpoint = (
+  endpoint: string,
+  scenarios: string[]
+) => {
+  const endpointScenarios = (scenariosForEndpoint[endpoint] as string[]) || [];
+  return scenarios.filter((a) => endpointScenarios.includes(a));
+};
