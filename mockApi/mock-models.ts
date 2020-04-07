@@ -1,7 +1,16 @@
 import { QuoteDto } from "api-models";
 
-interface Scenario {
-    scenarios: string[]
-}
+export const scenariosForEndpoint = {
+  "/api/quotes": ["phone", "no-phone", "draft", "open", "no-quotes"],
+};
 
-export interface QuoteDtoSceanrio extends QuoteDto, Scenario {}
+export type QuoteScenario =
+  | "phone"
+  | "no-phone"
+  | "draft"
+  | "open"
+  | "no-quotes";
+
+export interface QuoteDtoSceanrio extends QuoteDto {
+  scenarios: QuoteScenario[];
+}

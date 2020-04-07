@@ -3,4 +3,11 @@ export interface ScenarioGroup {
   scenarios: string[];
 }
 
-export const availableScenarios: string[] = ['draft', 'phone', 'open', 'error', 'noquotes'];
+export const availableScenarios: string[] = [
+  'draft',
+  'phone',
+  'open',
+  'error-quotes',
+  'error-user',
+  'no-quotes',
+];

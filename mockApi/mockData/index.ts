@@ -1,7 +1,9 @@
-import quotes from './quotes';
+import quotes from "./quotes";
+import user from "./user";
 
 const data = {
-  quotes
-}
+  quotes,
+  user,
+};
 
-export default data
+export default data;
