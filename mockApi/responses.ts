@@ -1,4 +1,4 @@
-module.exports = [
+const responses = [
   {
     urls: ['/api/quotes'],
     code: 'error',
@@ -9,3 +9,5 @@ module.exports = [
     },
   },
 ];
+
+export default responses

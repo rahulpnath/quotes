@@ -61,6 +61,8 @@ const ScenarioLoader = ({
             Scenario Selector
           </Typography>
           <Autocomplete
+            selectOnFocus
+            openOnFocus
             className={styles.selectCreate}
             value={selectedScenarioGroup}
             onChange={(event: any, newValue: ScenarioItemOptionType | null) => {

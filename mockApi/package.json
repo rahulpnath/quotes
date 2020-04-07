@@ -1,0 +1,16 @@
+{
+  "name": "mockapi",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "npx ts-node server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.16.1",
+    "@types/json-server": "^0.14.2",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {}
+}
