@@ -38,7 +38,7 @@
     "@types/testing-library__cypress": "^5.0.3",
     "cypress": "^4.2.0",
     "json-server": "^0.16.1",
-    "node-sass": "^4.13.1"
+    "node-sass": "^7.0.0"
   },
   "eslintConfig": {
     "extends": "react-app"
